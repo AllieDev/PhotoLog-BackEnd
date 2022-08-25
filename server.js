@@ -11,5 +11,5 @@ const photoLogs = require("./routes/photo-logs.js");
 app.use("/photo-logs", photoLogs);
 
 app.listen(3000, () => {
-  console.log("listening on port http://www.localhost:3000");
+  console.log("listening on port http://localhost:3000");
 });
