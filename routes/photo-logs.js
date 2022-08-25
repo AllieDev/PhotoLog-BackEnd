@@ -3,10 +3,22 @@ const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 
+
+
 router.get("/", (req, res) => {
   const rawData = fs.readFileSync("./data/data.json");
   const data = JSON.parse(rawData);
   res.json(data);
+});
+
+router.get("/:id", (req, res) => {
+  const rawData = fs.readFileSync("./data/data.json");
+  const data = JSON.parse(rawData);
+  
+  const photoLogData = data.photoLogsData.find((photoLog) => {
+    return photoLog.id == req.params.id;
+  });
+  res.json(photoLogData);
 });
 
 router.post("/", (req, res) => {
