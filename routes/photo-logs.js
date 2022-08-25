@@ -14,7 +14,10 @@ router.post("/", (req, res) => {
   res.end();
 });
 
-router.put("/:id", (req, res) => {});
+router.put("/:id", (req, res) => {
+  updateUserPostFromPhotoLogsData(req.params.id, req.body);
+  res.end();
+});
 
 router.delete("/:id", (req, res) => {
   console.log("DELETE request to /reminders with id of " + req.params.id);
@@ -45,6 +48,23 @@ async function deleteUserPostFromPhotoLogsData(paramId) {
   });
 
   data.photoLogsData.splice(photoLogIndex, 1);
+
+  const newJson = JSON.stringify(data);
+  fs.writeFileSync("./data/data.json", newJson);
+}
+// ----------------------------------------------------------------
+
+// update user post from data.json file -------------------------------
+async function updateUserPostFromPhotoLogsData(paramId, userPost) {
+  const rawData = fs.readFileSync("./data/data.json");
+  const data = JSON.parse(rawData);
+
+  const photoLogIndex = data.photoLogsData.findIndex((photoLog) => {
+    return photoLog.id == paramId;
+  });
+
+  userPost.id = uuidv4();
+  data.photoLogsData.splice(photoLogIndex, 1, userPost);
 
   const newJson = JSON.stringify(data);
   fs.writeFileSync("./data/data.json", newJson);
