@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 
 router.get("/", (req, res) => {
-  const rawData = fs.readFileSync("./data.data.json");
+  const rawData = fs.readFileSync("./data/data.json");
   const data = JSON.parse(rawData);
   res.json(data);
 });
